@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Loggd</title>
+  <link rel="stylesheet" type="text/css" href="popup.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lexend">
+</head>
+
+<body>
+  <div class="popup-container">
+    <div class="logo-container">
+      <!-- Light mode logo -->
+      <img src="images/Loggd_Wordmark_Black.png" alt="Logo (Light Mode)" id="lightLogo" class="logo">
+      <!-- Dark mode logo -->
+      <img src="images/Loggd_Wordmark_White.png" alt="Logo (Dark Mode)" id="darkLogo" class="logo">
+    </div>
+    
+    
+    <div class="icons">
+      <div class="icon-wrapper" data-source="letterboxd">
+        <div class="icon-img" style="background-image: url('images/letterboxdLogo.png')"></div>
+      </div>
+      <div class="icon-wrapper" data-source="imdb">
+        <div class="icon-img" style="background-image: url('images/imdbLogo.png')"></div>
+      </div>
+      <div class="icon-wrapper" data-source="rottenTomatoes">
+        <div class="icon-img" style="background-image: url('images/rtLogo.png')"></div>
+      </div>
+      <div class="icon-wrapper" data-source="metacritic">
+        <div class="icon-img" style="background-image: url('images/metacriticLogo.png')"></div>
+      </div>
+    </div>
+
+    <div class="source-text">Go to the <span id="selectedSource"></span> page for</div>
+
+    <div class="search-container">
+      <input type="text" id="movieTitle" placeholder="Search for a movie...">
+      <div class="search-icon"></div>
+    </div>
+      <p id="errorMessage" class="error"></p>
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+
+</html>
