@@ -46,8 +46,8 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   
     var searchQuery = `${movieTitle} ${selectedSource}`;
-    var apiKey = keys.hiddenAPI;
-    var cx = keys.hiddenCX;
+    var apiKey = keys.hiddenAPI; // API Key
+    var cx = keys.hiddenCX; // CX Key
   
     var url =
       `https://www.googleapis.com/customsearch/v1?key=${apiKey}&cx=${cx}&q=${encodeURIComponent(searchQuery)}`;
