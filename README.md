@@ -8,4 +8,4 @@ To use the extension, select a website, enter the name of a movie, and press ent
 **_Download_**: https://chromewebstore.google.com/detail/loggd/ecbepjhmbpkgmdejfekkmpoeijkcophm
 
 
-**[ ! ] NOTE:** The API and CX keys are hidden for security reasons. If you wish to use your own, please input those into the ```popup.js``` file accordingly.
+**[ ! ] NOTE:** The API and CX keys are hidden for security reasons. If you wish to use your own, please input those into your own version of ```popup.js``` file accordingly. They are marked via comments.
