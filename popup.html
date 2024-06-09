@@ -15,14 +15,17 @@
       <!-- Dark mode logo -->
       <img src="images/Loggd_Wordmark_White.png" alt="Logo (Dark Mode)" id="darkLogo" class="logo">
     </div>
-    
-    
+
+
     <div class="icons">
       <div class="icon-wrapper" data-source="letterboxd">
         <div class="icon-img" style="background-image: url('images/letterboxdLogo.png')"></div>
       </div>
       <div class="icon-wrapper" data-source="imdb">
         <div class="icon-img" style="background-image: url('images/imdbLogo.png')"></div>
+      </div>
+      <div class="icon-wrapper" data-source="tmdb">
+        <div class="icon-img" style="background-image: url('images/tmdbLogo.png')"></div>
       </div>
       <div class="icon-wrapper" data-source="rottenTomatoes">
         <div class="icon-img" style="background-image: url('images/rtLogo.png')"></div>
@@ -38,11 +41,15 @@
       <input type="text" id="movieTitle" placeholder="Search for a movie...">
       <div class="search-icon"></div>
     </div>
-      <p id="errorMessage" class="error"></p>
-    </div>
+    <sub>*Please use correct spelling* Press enter to search.</sub>
+    <p id="errorMessage" class="error"></p>
+  </div>
   </div>
 
-  <script src="popup.js"></script>
+  <script type="module" src="popup.js"></script>
+  <footer>
+    Created by Luke McMeans (2024)
+  </footer>
 </body>
 
 </html>
