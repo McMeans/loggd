@@ -60,7 +60,10 @@ function searchOnSourceSelection() {
     })
     .then(function (data) {
       if (data.items && data.items.length > 0 && data.items[0].link) {
-        chrome.tabs.create({ url: data.items[0].link });
+        if (typeof browser === "undefined") {
+          var browser = chrome;
+        }
+        browser.tabs.create({ url: data.items[0].link });
       } else {
         console.log("No search results found.");
       }

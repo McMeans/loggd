@@ -1,4 +1,8 @@
-chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+if (typeof browser === "undefined") {
+  var browser = chrome;
+}
+
+browser.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   if (request.selectFirstResult) {
     setTimeout(function () {
       var firstResultLink = document.querySelector(".g h3 a");
@@ -9,4 +13,4 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   }
 });
 
-chrome.runtime.sendMessage({ selectFirstResult: true });
+browser.runtime.sendMessage({ selectFirstResult: true });
