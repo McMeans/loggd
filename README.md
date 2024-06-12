@@ -5,7 +5,8 @@ This is a web extension that skips searching steps and directly brings you to th
 
 To use the extension, select a website, enter the name of a movie, and press enter. The extension will open a new tab with the first Google search result that fits your request best. Please use proper spelling, as not doing so may result in an improper result.
 
-**Add to Chrome_**: https://chromewebstore.google.com/detail/loggd/ecbepjhmbpkgmdejfekkmpoeijkcophm
-**Add to Safari_**: (Coming soon!)
+**_Add to Chrome_**: https://chromewebstore.google.com/detail/loggd/ecbepjhmbpkgmdejfekkmpoeijkcophm
+
+**_Add to Safari_**: (Coming soon!)
 
 **[ ! ] NOTE:** The API and CX keys for the Google search are hidden for security reasons. If you wish to use this code, please create and input your own versions in the ```popup.js``` file accordingly. They are marked via comments.
