@@ -7,6 +7,6 @@ To use the extension, select a website, enter the name of a movie, and press ent
 
 **_Add to Chrome_**: https://chromewebstore.google.com/detail/loggd/ecbepjhmbpkgmdejfekkmpoeijkcophm
 
-**_Add to Safari_**: (Coming soon!)
+(Safari and Firefox coming soon!)
 
 **[ ! ] NOTE:** The API and CX keys for the Google search are hidden for security reasons. If you wish to use this code, please create and input your own versions in the ```popup.js``` file accordingly. They are marked via comments.
