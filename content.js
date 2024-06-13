@@ -1,11 +1,9 @@
-if (typeof browser === "undefined") {
-  var browser = chrome;
-}
+import browser from './browser.js';
 
 browser.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   if (request.selectFirstResult) {
     setTimeout(function () {
-      var firstResultLink = document.querySelector(".g h3 a");
+      const firstResultLink = document.querySelector(".g h3 a");
       if (firstResultLink) {
         firstResultLink.click();
       }

@@ -7,14 +7,16 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lexend">
 </head>
 
-<body>
+<body id="body">
   <div class="popup-container">
     <div class="logo-container">
       <!-- Light mode logo -->
-      <img src="images/Loggd_Wordmark_Black.png" alt="Logo (Light Mode)" id="lightLogo" class="logo">
-      <!-- Dark mode logo -->
-      <img src="images/Loggd_Wordmark_White.png" alt="Logo (Dark Mode)" id="darkLogo" class="logo">
+      <img src="images/Loggd_Wordmark_Black.png" alt="Logo (Light Mode)" id="lightLogo" class="">
+      <!-- Logo -->
+      <img src="images/Loggd_Wordmark_White.png" alt="Logo" id="defaultLogo" class="">
     </div>
+
+    <img src="images/themeColors.png" alt="Change Color" id="themeImage" class="themeImage">
 
     <div class="icons">
       <div class="icon-wrapper" data-source="letterboxd">
@@ -41,14 +43,13 @@
       <div class="search-icon"></div>
     </div>
     <sub>*Please use correct spelling* Press enter to search.</sub>
-    <p id="errorMessage" class="error"></p>
+    <p id="errorMessage" class=""></p>
   </div>
   </div>
-
-  <script type="module" src="popup.js"></script>
   <footer>
     Created by Luke McMeans (2024)
   </footer>
+  <script type="module" src="popup.js"></script>
 </body>
 
 </html>

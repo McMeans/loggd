@@ -1,5 +1,4 @@
-body {
-  /*background-color: #efefefff;*/
+/*body {
   background-image: linear-gradient(135deg, rgb(222, 230, 238), rgb(187, 202, 221));
   font-family: "Lexend", sans-serif;
   margin: 10px;
@@ -165,11 +164,9 @@ sub {
   margin-top: 5px;
 }
 
-/* Styles for dark mode */
 @media (prefers-color-scheme: dark) {
   body {
     background-image: linear-gradient(135deg, rgb(44, 45, 48), rgb(26, 37, 50));
-    /*background-color: #2b2b2bff;*/
     color: #f1f1f1;
   }
 
@@ -193,4 +190,201 @@ sub {
   .source-text {
     color: #fff;
   }
+}*/
+
+body {
+  background-image: linear-gradient(rgb(47, 113, 234), rgb(37, 95, 201));
+  font-family: "Lexend", sans-serif;
+  margin: 10px;
+  width: 375px;
+  align-items: center;
+  color: #f1f1f1;
+}
+.green {
+  background-image: linear-gradient(rgb(76, 185, 68), rgb(62, 159, 55));
+}
+.yellow {
+  background-image: linear-gradient(rgb(254, 164, 0), rgb(222, 143, 0));
+}
+.purple {
+  background-image: linear-gradient(rgb(66, 32, 64), rgb(53, 25, 51));
+}
+.dark {
+  background-image: linear-gradient(rgb(43, 43, 43), rgb(33, 33, 33));
+}
+.light {
+  background-image: linear-gradient(rgb(231, 231, 231), rgb(211, 211, 211));
+}
+
+#defaultLogo, #lightLogo {
+  width: 100px;
+  margin: auto;
+  background-image: none;
+}
+.visibleLogo {
+  display: block;
+}
+.hiddenLogo {
+  display: none;
+}
+
+.themeImage {
+  position: absolute;
+  width: 50px;
+  height: auto;
+  left: 340px;
+  top: 5px;
+  z-index: 1000;
+}
+.themeImage:hover {
+  cursor: pointer;
+}
+
+.popup-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+}
+
+.icons {
+  margin-top: 15px;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.icon-img {
+  width: 50px;
+  height: 50px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+}
+
+.icon-wrapper {
+  width: 60px;
+  height: 60px;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  background-color: rgba(20, 20, 20, 0.2);
+  border-radius: 20%;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.3s ease;
+
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.icon-wrapper img {
+  width: 50px;
+  height: auto;
+}
+
+.icon-wrapper.selected[data-source="letterboxd"] {
+  border-color: #4cb944;
+}
+.icon-wrapper.selected[data-source="imdb"] {
+  border-color: #fec300;
+}
+.icon-wrapper.selected[data-source="tmdb"] {
+  border-color: #41bfc7;
+}
+.icon-wrapper.selected[data-source="rottenTomatoes"] {
+  border-color: #ff0000;
+}
+.icon-wrapper.selected[data-source="metacritic"] {
+  border-color: #ffc900;
+}
+
+.source-text {
+  font-size: 14px;
+  text-align: center;
+  margin-top: 5px;
+  color: #fff;
+}
+
+input[type="radio"] {
+  margin-right: 5px;
+}
+
+.search-container {
+  display: flex;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.search-icon {
+  position: absolute;
+  left: 8px;
+  top: 50%;
+  transform: translateY(-38%);
+  width: 20px;
+  height: 20px;
+  background-image: url('images/searchIcon.png');
+  filter: brightness(100);
+  opacity: 0.5;
+  background-size: cover;
+}
+
+#movieTitle {
+  width: 200px;
+  margin-top: 5px;
+  padding: 8px 36px 8px 32px;
+  font-family: "Lexend", sans-serif;
+  font-size: 14px;
+  background-color: rgba(20, 20, 20, 0.2);
+  color: #fff;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  border-radius: 8px;
+  justify-content: center;
+  align-self: center;
+}
+#movieTitle::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.errorVisible {
+  color: white;
+  margin-top: 10px;
+  padding: 5px 10px;
+  background-image: linear-gradient(rgb(255, 0, 0), rgb(218, 0, 0));
+  border-radius: 8px;
+}
+
+footer {
+  color: rgba(255, 255, 255, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+sub {
+  color: rgba(255, 255, 255, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 5px;
+  font-size: xx-small;
+  margin-top: 5px;
 }
