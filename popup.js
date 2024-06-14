@@ -57,7 +57,7 @@ function searchOnSourceSelection() {
     .then(function (data) {
       if (data.items && data.items.length > 0 && data.items[0].link) {
         errorMessage.className = "";
-        if(browser === "safari"){
+        if (browser === "safari") {
           const newTab = safari.application.activeBrowserWindow.openTab();
           newTab.url = data.items[0].link;
         } else {
@@ -82,39 +82,39 @@ function getSelectedSource() {
   return "";
 }
 
-document.getElementById("themeImage").addEventListener('click', function(event) {
+document.getElementById("themeImage").addEventListener('click', function (event) {
   const dimensions = document.querySelector(".themeImage").getBoundingClientRect();
   const height = dimensions.height;
   const width = dimensions.width;
   const x = event.clientX - dimensions.left;
   const y = event.clientY - dimensions.top;
-  
+
   const blueRegion = { x1: 0, y1: 0, x2: width / 3, y2: height / 2 };
   const greenRegion = { x1: width / 3, y1: 0, x2: (2 / 3) * width, y2: height / 2 };
   const yellowRegion = { x1: (2 / 3) * width, y1: 0, x2: width, y2: height / 2 };
   const purpleRegion = { x1: 0, y1: height / 2, x2: width / 3, y2: height };
   const darkRegion = { x1: width / 3, y1: height / 2, x2: (2 / 3) * width, y2: height };
   const lightRegion = { x1: (2 / 3) * width, y1: height / 2, x2: width, y2: height };
-  
+
   var theme = "";
-  if(inRegion(x, y, blueRegion)){
+  if (inRegion(x, y, blueRegion)) {
     theme = "";
-  } else if(inRegion(x, y, greenRegion)){
+  } else if (inRegion(x, y, greenRegion)) {
     theme = "green";
-  } else if(inRegion(x, y, yellowRegion)){
+  } else if (inRegion(x, y, yellowRegion)) {
     theme = "yellow";
-  } else if(inRegion(x, y, purpleRegion)){
+  } else if (inRegion(x, y, purpleRegion)) {
     theme = "purple";
-  } else if(inRegion(x, y, darkRegion)){
+  } else if (inRegion(x, y, darkRegion)) {
     theme = "dark";
-  } else if(inRegion(x, y, lightRegion)){
+  } else if (inRegion(x, y, lightRegion)) {
     theme = "light";
   }
   setTheme(theme);
   localStorage.setItem('theme', theme);
 });
 
-function setTheme(theme){
+function setTheme(theme) {
   const body = document.getElementById('body');
   const prevTheme = body.className;
   body.className = theme;
@@ -127,7 +127,7 @@ function setTheme(theme){
   const movieTitle = document.querySelector(".movie-title");
   const footer = document.querySelector("footer");
   const sub = document.querySelector("sub");
-  if(theme === "light"){
+  if (theme === "light") {
     defaultLogo.className = "hiddenLogo";
     lightLogo.className = "visibleLogo";
     iconWrappers.forEach(icon => {
@@ -164,14 +164,14 @@ function setTheme(theme){
   }
 }
 
-function inRegion(x, y, region){
+function inRegion(x, y, region) {
   return (x >= region.x1 && x <= region.x2 && y >= region.y1 && y <= region.y2);
 }
 
-window.onload = function() {
-  if(localStorage.length !== 0){
+window.onload = function () {
+  if (localStorage.length !== 0) {
     setTheme(localStorage.getItem('theme'));
-  } else if(window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches){
+  } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
     setTheme("light")
   } else {
     setTheme("dark")
