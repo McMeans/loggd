@@ -1,5 +1,4 @@
 import { hiddenAPI, hiddenCX } from './keys.js';
-import browser from './browser.js';
 
 document.addEventListener("DOMContentLoaded", function () {
   const movieTitleInput = document.getElementById("movieTitle");
@@ -48,8 +47,8 @@ function searchOnSourceSelection() {
   const searchQuery = `${movieTitle} "${selectedSource}"`;
   const apiKey = hiddenAPI; // API Key
   const cx = hiddenCX; // CX Key
-
   const url = `https://www.googleapis.com/customsearch/v1?key=${apiKey}&cx=${cx}&q=${encodeURIComponent(searchQuery)}`;
+
   fetch(url)
     .then(function (response) {
       return response.json();
@@ -57,12 +56,10 @@ function searchOnSourceSelection() {
     .then(function (data) {
       if (data.items && data.items.length > 0 && data.items[0].link) {
         errorMessage.className = "";
-        if (browser === "safari") {
-          const newTab = safari.application.activeBrowserWindow.openTab();
-          newTab.url = data.items[0].link;
-        } else {
-          browser.tabs.create({ url: data.items[0].link });
+        if (typeof chrome !== 'undefined'){
+          var browser = chrome;
         }
+        browser.tabs.create({ url: data.items[0].link });
       } else {
         errorMessage.className = "errorVisible";
         errorMessage.textContent = "No Search Results Found.";
