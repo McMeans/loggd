@@ -169,13 +169,11 @@ function inRegion(x, y, region){
 }
 
 window.onload = function() {
-  try{
+  if(localStorage.length !== 0){
     setTheme(localStorage.getItem('theme'));
-  } catch(Exception) {
-    if(window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches){
-      setTheme("light")
-    } else {
-      setTheme("dark")
-    }
+  } else if(window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches){
+    setTheme("light")
+  } else {
+    setTheme("dark")
   }
 };
