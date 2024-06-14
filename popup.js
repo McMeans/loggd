@@ -57,7 +57,12 @@ function searchOnSourceSelection() {
     .then(function (data) {
       if (data.items && data.items.length > 0 && data.items[0].link) {
         errorMessage.className = "";
-        browser.tabs.create({ url: data.items[0].link });
+        if(browser === "safari"){
+          const newTab = safari.application.activeBrowserWindow.openTab();
+          newTab.url = data.items[0].link;
+        } else {
+          browser.tabs.create({ url: data.items[0].link });
+        }
       } else {
         errorMessage.className = "errorVisible";
         errorMessage.textContent = "No Search Results Found.";
@@ -111,16 +116,51 @@ document.getElementById("themeImage").addEventListener('click', function(event) 
 
 function setTheme(theme){
   const body = document.getElementById('body');
+  const prevTheme = body.className;
   body.className = theme;
 
   const defaultLogo = document.getElementById('defaultLogo');
   const lightLogo = document.getElementById('lightLogo');
+  const iconWrappers = document.querySelectorAll(".icon-wrapper");
+  const sourceText = document.querySelector(".source-text");
+  const searchIcon = document.querySelector(".search-icon");
+  const movieTitle = document.querySelector(".movie-title");
+  const footer = document.querySelector("footer");
+  const sub = document.querySelector("sub");
   if(theme === "light"){
     defaultLogo.className = "hiddenLogo";
     lightLogo.className = "visibleLogo";
-  } else {
+    iconWrappers.forEach(icon => {
+      icon.classList.add('icon-wrapper-light')
+      icon.classList.remove('icon-wrapper-dark')
+    });
+    sourceText.classList.add('source-text-light');
+    sourceText.classList.remove('source-text-dark');
+    searchIcon.classList.add('search-icon-light');
+    searchIcon.classList.remove('search-icon-dark');
+    movieTitle.classList.add('movie-title-light');
+    movieTitle.classList.remove('movie-title-dark');
+    footer.classList.add('footer-light');
+    footer.classList.remove('footer-dark');
+    sub.classList.add('sub-light');
+    sub.classList.remove('sub-dark');
+  } else if (prevTheme === "light") {
     defaultLogo.className = "visibleLogo";
     lightLogo.className = "hiddenLogo";
+    iconWrappers.forEach(icon => {
+      icon.classList.add('icon-wrapper-dark')
+      icon.classList.remove('icon-wrapper-light')
+    });
+    sourceText.classList.add('source-text-dark');
+    sourceText.classList.remove('source-text-light');
+    searchIcon.classList.add('search-icon-dark');
+    searchIcon.classList.remove('search-icon-light');
+    movieTitle.classList.add('movie-title-dark');
+    movieTitle.classList.remove('movie-title-light');
+    footer.classList.add('footer-dark');
+    footer.classList.remove('footer-light');
+    sub.classList.add('sub-dark');
+    sub.classList.remove('sub-light');
   }
 }
 
