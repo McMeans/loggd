@@ -9,6 +9,4 @@ To use the extension, select a website, enter the name of a movie, and press ent
 
 **_Add to Firefox_**: https://addons.mozilla.org/en-US/firefox/addon/loggd/
 
-(Safari coming soon!)
-
 **[ ! ] NOTE:** The API and CX keys for the Google search are hidden for security reasons. If you wish to use this code, please create and input your own versions in the ```popup.js``` file accordingly. They are marked via comments.
