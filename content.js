@@ -1,6 +1,5 @@
 import browser from './browser.js';
 
-
 if (browser === "safari") {
   window.addEventListener("message", function (event) {
     if (event.source != window) return;
