@@ -1,10 +1,21 @@
+* {
+  box-sizing: border-box;
+}
+
+[hidden] {
+  display: none !important;
+}
+
 body {
-  background-image: linear-gradient(rgb(47, 113, 234), rgb(37, 95, 201));
+  background-image: linear-gradient(rgb(43, 43, 43), rgb(33, 33, 33));
   font-family: "Lexend", sans-serif;
   margin: 10px;
   width: 375px;
-  align-items: center;
   color: #f1f1f1;
+}
+
+.blue {
+  background-image: linear-gradient(rgb(47, 113, 234), rgb(37, 95, 201));
 }
 .green {
   background-image: linear-gradient(rgb(76, 185, 68), rgb(62, 159, 55));
@@ -20,12 +31,13 @@ body {
 }
 .light {
   background-image: linear-gradient(rgb(231, 231, 231), rgb(211, 211, 211));
+  color: #1a1a1a;
 }
 
-#defaultLogo, #lightLogo {
+#defaultLogo,
+#lightLogo {
   width: 100px;
   margin: auto;
-  background-image: none;
 }
 .visibleLogo {
   display: block;
@@ -41,32 +53,19 @@ body {
   left: 340px;
   top: 5px;
   z-index: 1000;
-}
-.themeImage:hover {
   cursor: pointer;
 }
 
 .popup-container {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-  height: 100%;
-}
-
-.container {
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  height: 200px;
 }
 
 .icons {
   margin-top: 15px;
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   flex-wrap: wrap;
   gap: 10px;
   margin-bottom: 15px;
@@ -79,7 +78,6 @@ body {
   background-repeat: no-repeat;
   background-position: center;
   border-radius: 10px;
-  transition: all 0.3s ease;
 }
 
 .icon-wrapper {
@@ -90,62 +88,45 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  transition: all 0.3s ease;
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-}
-.icon-wrapper-dark {
   background-color: rgba(20, 20, 20, 0.2);
   border: 2px solid rgba(255, 255, 255, 0.5);
 }
-.icon-wrapper-light {
+.light .icon-wrapper {
   background-color: rgba(255, 255, 255, 0.5);
-  border: 2px solid rgba(47, 47, 47, 0.5);
+  border-color: rgba(47, 47, 47, 0.5);
 }
 
-.icon-wrapper img {
-  width: 50px;
-  height: auto;
-}
-
-.icon-wrapper.selected[data-source="letterboxd"] {
-  border-color: #4cb944;
-}
-.icon-wrapper.selected[data-source="imdb"] {
-  border-color: #fec300;
-}
-.icon-wrapper.selected[data-source="tmdb"] {
-  border-color: #41bfc7;
-}
-.icon-wrapper.selected[data-source="rottenTomatoes"] {
-  border-color: #ff0000;
-}
-.icon-wrapper.selected[data-source="metacritic"] {
-  border-color: #ffc900;
-}
+.icon-wrapper.selected[data-source="letterboxd"] { border-color: #4cb944; }
+.icon-wrapper.selected[data-source="imdb"] { border-color: #fec300; }
+.icon-wrapper.selected[data-source="tmdb"] { border-color: #41bfc7; }
+.icon-wrapper.selected[data-source="rottenTomatoes"] { border-color: #ff0000; }
+.icon-wrapper.selected[data-source="metacritic"] { border-color: #ffc900; }
 
 .source-text {
   font-size: 14px;
   text-align: center;
-  margin-top: 5px;
-}
-.source-text-dark{
-  color: #fff;
-}
-.source-text-light {
-  color: #000;
+  margin: 5px 48px 0;
+  min-height: 2.6em;
 }
 
-input[type="radio"] {
-  margin-right: 5px;
+.detected-note {
+  width: 300px;
+  margin: 8px 0 0;
+  font-size: 12px;
+  text-align: center;
+}
+
+.search-block,
+.suggestions,
+.selection,
+.watch {
+  width: 300px;
 }
 
 .search-container {
   display: flex;
   position: relative;
   align-items: center;
-  justify-content: center;
   margin-top: 10px;
 }
 
@@ -153,79 +134,239 @@ input[type="radio"] {
   position: absolute;
   left: 8px;
   top: 50%;
-  transform: translateY(-38%);
+  transform: translateY(-50%);
   width: 20px;
   height: 20px;
-  background-image: url('images/searchIcon.png');
-  opacity: 0.5;
+  border: 0;
+  padding: 0;
+  background-color: transparent;
+  background-image: url("images/searchIcon.png");
   background-size: cover;
-}
-.search-icon-dark {
+  opacity: 0.7;
   filter: brightness(100);
+  cursor: pointer;
 }
-.search-icon-light {
+.light .search-icon {
   filter: brightness(0);
 }
 
 .movie-title {
-  width: 200px;
-  margin-top: 5px;
-  padding: 8px 36px 8px 32px;
+  width: 100%;
+  padding: 8px 12px 8px 32px;
   font-family: "Lexend", sans-serif;
   font-size: 14px;
   border-radius: 8px;
-  justify-content: center;
-  align-self: center;
-}
-.movie-title-dark {
   background-color: rgba(20, 20, 20, 0.2);
   color: #fff;
   border: 2px solid rgba(255, 255, 255, 0.5);
 }
-.movie-title-light {
-  background-color: rgba(255, 255, 255, 0.5);
-  color: #000;
-  border: 2px solid rgba(47, 47, 47, 0.5);
-}
-.movie-title-dark::placeholder {
+.movie-title::placeholder {
   color: rgba(255, 255, 255, 0.5);
 }
-.movie-title-light::placeholder {
+.light .movie-title {
+  background-color: rgba(255, 255, 255, 0.5);
+  color: #000;
+  border-color: rgba(47, 47, 47, 0.5);
+}
+.light .movie-title::placeholder {
   color: rgba(0, 0, 0, 0.5);
 }
 
-.errorVisible {
-  color: white;
+.suggestions {
+  list-style: none;
+  margin: 6px 0 0;
+  padding: 4px;
+  max-height: 220px;
+  overflow: auto;
+  border-radius: 8px;
+  background-color: rgba(20, 20, 20, 0.28);
+  border: 2px solid rgba(255, 255, 255, 0.35);
+}
+.light .suggestions {
+  background-color: rgba(255, 255, 255, 0.72);
+  border-color: rgba(47, 47, 47, 0.35);
+}
+
+.suggestion {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-align: left;
+  border: 0;
+  border-radius: 6px;
+  padding: 4px;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+}
+.suggestion.active {
+  background-color: rgba(255, 255, 255, 0.16);
+}
+.light .suggestion.active {
+  background-color: rgba(0, 0, 0, 0.08);
+}
+
+.poster {
+  width: 28px;
+  height: 42px;
+  object-fit: cover;
+  border-radius: 4px;
+  flex: none;
+  background-color: rgba(255, 255, 255, 0.15);
+}
+.poster-empty {
+  display: inline-block;
+}
+
+.selection {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   margin-top: 10px;
+}
+.selection-copy {
+  flex: 1;
+  min-width: 0;
+  font-size: 13px;
+}
+.selection-copy div:first-child {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.watch {
+  margin-top: 12px;
+}
+.watch-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 13px;
+}
+.region-label select,
+.text-button {
+  font-family: "Lexend", sans-serif;
+  font-size: 12px;
+  color: inherit;
+}
+.region-label select {
+  max-width: 150px;
+  border-radius: 6px;
+  padding: 3px 4px;
+  background-color: rgba(20, 20, 20, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.45);
+}
+.light .region-label select {
+  background-color: rgba(255, 255, 255, 0.7);
+  border-color: rgba(47, 47, 47, 0.4);
+}
+
+.providers {
+  margin-top: 8px;
+  font-size: 12px;
+}
+.provider-label {
+  margin-top: 6px;
+  opacity: 0.75;
+}
+.provider-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 4px;
+}
+.provider {
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 0;
+  border-radius: 6px;
+  overflow: hidden;
+  cursor: pointer;
+  background: transparent;
+}
+.provider img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.text-button {
+  margin-top: 8px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.muted,
+.setup-note,
+.attribution,
+footer {
+  color: rgba(255, 255, 255, 0.72);
+}
+.light .muted,
+.light .setup-note,
+.light .attribution,
+.light footer {
+  color: rgba(0, 0, 0, 0.62);
+}
+
+.setup-note,
+.errorVisible {
+  width: 300px;
+  text-align: center;
+  font-size: 12px;
+}
+.setup-note {
+  margin: 10px 0 0;
+}
+.errorVisible {
+  margin: 10px 0 0;
   padding: 5px 10px;
+  color: white;
   background-image: linear-gradient(rgb(255, 0, 0), rgb(218, 0, 0));
   border-radius: 8px;
+}
+
+.attribution {
+  width: 300px;
+  margin: 14px 0 0;
+  font-size: 10px;
+  line-height: 1.4;
+  text-align: center;
+}
+.attribution img {
+  width: 14px;
+  height: 14px;
+  vertical-align: -2px;
+  margin-right: 4px;
+}
+.attribution a {
+  color: inherit;
 }
 
 footer {
   display: flex;
   justify-content: center;
-  align-items: center;
-  margin-bottom: 5px;
-}
-.footer-dark {
-  color: rgba(255, 255, 255, 0.5);
-}
-.footer-light {
-  color: rgba(0, 0, 0, 0.5);
+  margin: 12px 0 5px;
+  font-size: 12px;
 }
 
-sub {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 5px;
-  font-size: xx-small;
-  margin-top: 5px;
-}
-.sub-dark {
-  color: rgba(255, 255, 255, 0.5);
-}
-.sub-light {
-  color: rgba(0, 0, 0, 0.5);
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
 }

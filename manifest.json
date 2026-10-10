@@ -1,8 +1,9 @@
 {
   "manifest_version": 3,
   "name": "Loggd",
-  "version": "1.2.0",
-  "description": "Search for movies on various websites (Letterboxd, IMDb, TMDB, Rotten Tomatoes, and Metacritic).",
+  "version": "1.4.0",
+  "description": "Open a movie on Letterboxd, IMDb, TMDB, Rotten Tomatoes, or Metacritic, and see where to stream it.",
+  "permissions": ["storage", "activeTab", "scripting"],
   "action": {
     "default_popup": "popup.html",
     "default_icon": {
