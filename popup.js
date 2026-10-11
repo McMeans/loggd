@@ -16,49 +16,6 @@ const SOURCE_LABELS = {
   metacritic: "Metacritic",
 };
 
-const REGIONS = [
-  ["AR", "Argentina"],
-  ["AU", "Australia"],
-  ["AT", "Austria"],
-  ["BE", "Belgium"],
-  ["BR", "Brazil"],
-  ["CA", "Canada"],
-  ["DK", "Denmark"],
-  ["FI", "Finland"],
-  ["FR", "France"],
-  ["DE", "Germany"],
-  ["HK", "Hong Kong"],
-  ["IN", "India"],
-  ["IE", "Ireland"],
-  ["IT", "Italy"],
-  ["JP", "Japan"],
-  ["MX", "Mexico"],
-  ["NL", "Netherlands"],
-  ["NZ", "New Zealand"],
-  ["NO", "Norway"],
-  ["PH", "Philippines"],
-  ["PL", "Poland"],
-  ["PT", "Portugal"],
-  ["SG", "Singapore"],
-  ["ZA", "South Africa"],
-  ["KR", "South Korea"],
-  ["ES", "Spain"],
-  ["SE", "Sweden"],
-  ["CH", "Switzerland"],
-  ["TW", "Taiwan"],
-  ["TH", "Thailand"],
-  ["GB", "United Kingdom"],
-  ["US", "United States"],
-];
-
-const WATCH_GROUPS = [
-  ["flatrate", "Subscription"],
-  ["free", "Free"],
-  ["ads", "With ads"],
-  ["rent", "Rent"],
-  ["buy", "Buy"],
-];
-
 const ext = globalThis.chrome ?? globalThis.browser;
 
 const body = document.getElementById("body");
@@ -74,9 +31,8 @@ const selectionPoster = document.getElementById("selectionPoster");
 const selectionTitle = document.getElementById("selectionTitle");
 const selectionYear = document.getElementById("selectionYear");
 const clearSelection = document.getElementById("clearSelection");
+const openEl = document.getElementById("open");
 const watchEl = document.getElementById("watch");
-const regionSelect = document.getElementById("region");
-const providersEl = document.getElementById("providers");
 const watchLink = document.getElementById("watchLink");
 const setupNote = document.getElementById("setupNote");
 const detectedNote = document.getElementById("detectedNote");
@@ -116,9 +72,8 @@ function storageSet(items) {
 }
 
 function defaultRegion() {
-  const parts = (navigator.language || "en-US").split("-");
-  const code = parts[parts.length - 1].toUpperCase();
-  return REGIONS.some(([id]) => id === code) ? code : "US";
+  const code = (navigator.language || "en-US").split("-").pop().toUpperCase();
+  return /^[A-Z]{2}$/.test(code) ? code : "US";
 }
 
 function yearOf(movie) {
@@ -138,28 +93,32 @@ function updatePrompt() {
   const site = SOURCE_LABELS[selectedSource];
   const year = selectedMovie ? yearOf(selectedMovie) : "";
   const title = selectedMovie ? `${selectedMovie.title}${year ? ` (${year})` : ""}` : "";
-  if (site && title) prompt.textContent = `Go to the ${site} page for ${title}`;
-  else if (site) prompt.textContent = `Go to the ${site} page for`;
-  else prompt.textContent = "Choose a site, then pick a movie";
+  if (site && title) prompt.textContent = `Open ${title} on ${site}`;
+  else if (site) prompt.textContent = `${site} selected`;
+  else prompt.textContent = "";
 }
 
 function applyTheme(theme) {
   const name = theme || "blue";
   body.className = name;
-  const light = name === "light";
-  defaultLogo.classList.toggle("hiddenLogo", light);
-  defaultLogo.classList.toggle("visibleLogo", !light);
-  lightLogo.classList.toggle("hiddenLogo", !light);
-  lightLogo.classList.toggle("visibleLogo", light);
+  const darkInk = name === "light" || name === "yellow";
+  defaultLogo.classList.toggle("hiddenLogo", darkInk);
+  defaultLogo.classList.toggle("visibleLogo", !darkInk);
+  lightLogo.classList.toggle("hiddenLogo", !darkInk);
+  lightLogo.classList.toggle("visibleLogo", darkInk);
+  document.querySelectorAll(".swatch").forEach((swatch) => {
+    swatch.setAttribute("aria-pressed", swatch.dataset.theme === name ? "true" : "false");
+  });
 }
 
-function selectSource(source, persist = true) {
+function selectSource(source) {
   selectedSource = SOURCE_LABELS[source] ? source : "";
   icons.forEach((icon) => {
-    icon.classList.toggle("selected", icon.dataset.source === selectedSource);
+    const on = icon.dataset.source === selectedSource;
+    icon.classList.toggle("selected", on);
+    icon.setAttribute("aria-pressed", on ? "true" : "false");
   });
   updatePrompt();
-  if (persist && selectedSource) storageSet({ source: selectedSource });
 }
 
 function renderSuggestions() {
@@ -201,58 +160,22 @@ function renderSuggestions() {
 }
 
 function renderSelection() {
-  if (!selectedMovie) {
-    selectionEl.hidden = true;
-    watchEl.hidden = true;
-    return;
-  }
+  const picked = Boolean(selectedMovie);
+  selectionEl.hidden = !picked;
+  openEl.hidden = !picked;
+  watchEl.hidden = !picked;
+  if (!picked) return;
   const src = posterUrl(selectedMovie.poster_path, "w92");
   selectionPoster.hidden = !src;
   if (src) selectionPoster.src = src;
   selectionTitle.textContent = selectedMovie.title;
   selectionYear.textContent = yearOf(selectedMovie);
-  selectionEl.hidden = false;
-  watchEl.hidden = false;
 }
 
-function renderProviders(country) {
-  providersEl.replaceChildren();
-  watchLinkUrl = country?.link || "";
-  watchLink.hidden = !watchLinkUrl;
-  if (!country) {
-    providersEl.textContent = "Nothing listed in this region.";
-    return;
-  }
-  let any = false;
-  for (const [key, label] of WATCH_GROUPS) {
-    const list = country[key];
-    if (!list?.length) continue;
-    any = true;
-    const heading = document.createElement("div");
-    heading.className = "provider-label";
-    heading.textContent = label;
-    const row = document.createElement("div");
-    row.className = "provider-row";
-    [...list]
-      .sort((a, b) => a.display_priority - b.display_priority)
-      .forEach((provider) => {
-        const button = document.createElement("button");
-        button.type = "button";
-        button.className = "provider";
-        button.title = provider.provider_name;
-        button.setAttribute("aria-label", provider.provider_name);
-        const img = document.createElement("img");
-        img.alt = "";
-        img.src = posterUrl(provider.logo_path, "w45");
-        button.append(img);
-        button.addEventListener("click", () => {
-          if (watchLinkUrl) openTab(watchLinkUrl);
-        });
-        row.append(button);
-      });
-    providersEl.append(heading, row);
-  }
-  if (!any) providersEl.textContent = "Nothing listed in this region.";
+function showWatchLink(link) {
+  watchLinkUrl = link || "";
+  watchLink.disabled = !watchLinkUrl;
+  watchLink.textContent = watchLinkUrl ? "Where to watch" : "Nothing listed here";
 }
 
 async function tmdb(path, params = {}, signal) {
@@ -378,17 +301,17 @@ function applyPlaying(found) {
 }
 
 async function loadWatch(movie) {
-  const region = regionSelect.value;
-  providersEl.textContent = "Checking streaming…";
-  watchLink.hidden = true;
+  const region = defaultRegion();
+  watchLink.disabled = true;
+  watchLink.textContent = "Where to watch";
   watchLinkUrl = "";
   try {
     const data = await tmdb(`/movie/${movie.id}/watch/providers`);
-    if (selectedMovie !== movie || regionSelect.value !== region) return;
-    renderProviders(data.results?.[region]);
+    if (selectedMovie !== movie) return;
+    showWatchLink(data.results?.[region]?.link);
   } catch (error) {
     if (selectedMovie !== movie) return;
-    providersEl.textContent = "";
+    showWatchLink("");
     showError(error.message || "Couldn't load where to watch.");
   }
 }
@@ -417,6 +340,7 @@ function selectMovie(movie) {
   movieTitleInput.value = selectedMovie.title;
   suggestions = [];
   renderSuggestions();
+  selectSource("");
   renderSelection();
   updatePrompt();
   showError("");
@@ -465,32 +389,11 @@ async function openMovie(source) {
   openTab(sourceUrl(source, selectedMovie));
 }
 
-function fillRegions(selected) {
-  regionSelect.replaceChildren();
-  for (const [code, label] of REGIONS) {
-    const option = document.createElement("option");
-    option.value = code;
-    option.textContent = label;
-    regionSelect.append(option);
-  }
-  if (selected && !REGIONS.some(([code]) => code === selected)) {
-    const option = document.createElement("option");
-    option.value = selected;
-    option.textContent = selected;
-    regionSelect.append(option);
-  }
-  regionSelect.value = selected || defaultRegion();
-}
-
-function inRegion(x, y, region) {
-  return x >= region.x1 && x <= region.x2 && y >= region.y1 && y <= region.y2;
-}
-
 async function init() {
   const playingPromise = detectPlaying();
   if (!hasKey()) setupNote.hidden = false;
 
-  const saved = await storageGet(["theme", "source", "region"]);
+  const saved = await storageGet(["theme"]);
   let theme = saved.theme;
   if (theme == null || theme === "") {
     const legacy = localStorage.getItem("theme");
@@ -502,41 +405,19 @@ async function init() {
   applyTheme(theme);
   if (saved.theme == null) storageSet({ theme });
 
-  fillRegions(saved.region || defaultRegion());
-  if (saved.source) selectSource(saved.source, false);
-
-  document.getElementById("themeImage").addEventListener("click", (event) => {
-    const dimensions = event.currentTarget.getBoundingClientRect();
-    const x = event.clientX - dimensions.left;
-    const y = event.clientY - dimensions.top;
-    const width = dimensions.width;
-    const height = dimensions.height;
-    const areas = [
-      [{ x1: 0, y1: 0, x2: width / 3, y2: height / 2 }, "blue"],
-      [{ x1: width / 3, y1: 0, x2: (2 / 3) * width, y2: height / 2 }, "green"],
-      [{ x1: (2 / 3) * width, y1: 0, x2: width, y2: height / 2 }, "yellow"],
-      [{ x1: 0, y1: height / 2, x2: width / 3, y2: height }, "purple"],
-      [{ x1: width / 3, y1: height / 2, x2: (2 / 3) * width, y2: height }, "dark"],
-      [{ x1: (2 / 3) * width, y1: height / 2, x2: width, y2: height }, "light"],
-    ];
-    const match = areas.find(([area]) => inRegion(x, y, area));
-    const next = match ? match[1] : "blue";
-    applyTheme(next);
-    storageSet({ theme: next });
-    localStorage.setItem("theme", next === "blue" ? "" : next);
+  document.querySelectorAll(".swatch").forEach((swatch) => {
+    swatch.addEventListener("click", () => {
+      const next = swatch.dataset.theme || "blue";
+      applyTheme(next);
+      storageSet({ theme: next });
+      localStorage.setItem("theme", next === "blue" ? "" : next);
+    });
   });
 
   icons.forEach((icon) => {
-    const choose = () => {
+    icon.addEventListener("click", () => {
       selectSource(icon.dataset.source);
       if (selectedMovie) openMovie(icon.dataset.source).catch((error) => showError(error.message));
-    };
-    icon.addEventListener("click", choose);
-    icon.addEventListener("keydown", (event) => {
-      if (event.key === "Enter" || event.key === " ") {
-        event.preventDefault();
-        choose();
-      }
     });
   });
 
@@ -583,11 +464,6 @@ async function init() {
   });
 
   clearSelection.addEventListener("click", clearMovie);
-
-  regionSelect.addEventListener("change", () => {
-    storageSet({ region: regionSelect.value });
-    if (selectedMovie) loadWatch(selectedMovie);
-  });
 
   watchLink.addEventListener("click", () => {
     if (watchLinkUrl) openTab(watchLinkUrl);

@@ -2,53 +2,56 @@
 <html>
 
 <head>
+  <meta charset="utf-8">
   <title>Loggd</title>
   <link rel="stylesheet" type="text/css" href="popup.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lexend">
 </head>
 
 <body id="body" class="dark">
-  <div class="popup-container">
-    <div class="logo-container">
-      <img src="images/Loggd_Wordmark_Black.png" alt="Loggd" id="lightLogo" class="hiddenLogo">
-      <img src="images/Loggd_Wordmark_White.png" alt="Loggd" id="defaultLogo" class="visibleLogo">
+  <div class="popup">
+    <header class="top">
+      <div class="logo-container">
+        <img src="images/Loggd_Wordmark_Black.png" alt="Loggd" id="lightLogo" class="hiddenLogo">
+        <img src="images/Loggd_Wordmark_White.png" alt="Loggd" id="defaultLogo" class="visibleLogo">
+      </div>
+      <div class="top-tools">
+        <div class="themes" role="radiogroup" aria-label="Color">
+          <button type="button" class="swatch" data-theme="dark" aria-label="Dark" title="Dark" aria-pressed="true"></button>
+          <button type="button" class="swatch" data-theme="light" aria-label="Light" title="Light" aria-pressed="false"></button>
+          <button type="button" class="swatch" data-theme="blue" aria-label="Blue" title="Blue" aria-pressed="false"></button>
+          <button type="button" class="swatch" data-theme="green" aria-label="Green" title="Green" aria-pressed="false"></button>
+          <button type="button" class="swatch" data-theme="purple" aria-label="Purple" title="Purple" aria-pressed="false"></button>
+          <button type="button" class="swatch" data-theme="yellow" aria-label="Yellow" title="Yellow" aria-pressed="false"></button>
+        </div>
+        <div class="tmdb-wrap">
+          <a class="tmdb-mark" href="https://www.themoviedb.org/" target="_blank" rel="noopener" aria-describedby="tmdbNotice">
+            <img src="images/tmdbLogo.png" alt="TMDB">
+          </a>
+          <p class="notice" id="tmdbNotice" role="tooltip">
+            This product uses TMDB and the TMDB APIs but is not endorsed, certified, or otherwise approved by TMDB.
+            Streaming data from <a href="https://www.justwatch.com/" target="_blank" rel="noopener">JustWatch</a>.
+          </p>
+        </div>
+      </div>
+    </header>
+
+    <div class="search-wrap">
+      <form id="searchForm" class="search-block" autocomplete="off">
+        <div class="search-container">
+          <input type="text" class="movie-title" id="movieTitle" placeholder="Search for a movie"
+            autocomplete="off" spellcheck="false" role="combobox" aria-autocomplete="list"
+            aria-expanded="false" aria-controls="suggestions">
+          <button type="submit" class="search-icon" aria-label="Search"></button>
+        </div>
+      </form>
+      <ul id="suggestions" class="suggestions" role="listbox" hidden></ul>
+      <p id="detectedNote" class="detected-note muted" role="status" hidden></p>
     </div>
 
-    <img src="images/themeColors.png" alt="Change color" id="themeImage" class="themeImage">
+    <div id="prompt" class="visually-hidden" role="status"></div>
 
-    <div class="icons">
-      <div class="icon-wrapper" data-source="letterboxd" role="button" tabindex="0" title="Letterboxd">
-        <div class="icon-img" style="background-image: url('images/letterboxdLogo.png')"></div>
-      </div>
-      <div class="icon-wrapper" data-source="imdb" role="button" tabindex="0" title="IMDb">
-        <div class="icon-img" style="background-image: url('images/imdbLogo.png')"></div>
-      </div>
-      <div class="icon-wrapper" data-source="tmdb" role="button" tabindex="0" title="TMDB">
-        <div class="icon-img" style="background-image: url('images/tmdbLogo.png')"></div>
-      </div>
-      <div class="icon-wrapper" data-source="rottenTomatoes" role="button" tabindex="0" title="Rotten Tomatoes">
-        <div class="icon-img" style="background-image: url('images/rtLogo.png')"></div>
-      </div>
-      <div class="icon-wrapper" data-source="metacritic" role="button" tabindex="0" title="Metacritic">
-        <div class="icon-img" style="background-image: url('images/metacriticLogo.png')"></div>
-      </div>
-    </div>
-
-    <div class="source-text" id="prompt">Choose a site, then pick a movie</div>
-    <p id="detectedNote" class="detected-note muted" role="status" hidden></p>
-
-    <form id="searchForm" class="search-block" autocomplete="off">
-      <div class="search-container">
-        <input type="text" class="movie-title" id="movieTitle" placeholder="Search for a movie..."
-          autocomplete="off" spellcheck="false" role="combobox" aria-autocomplete="list"
-          aria-expanded="false" aria-controls="suggestions">
-        <button type="submit" class="search-icon" aria-label="Search"></button>
-      </div>
-    </form>
-
-    <ul id="suggestions" class="suggestions" role="listbox" hidden></ul>
-
-    <div id="selection" class="selection" hidden>
+    <div id="selection" class="selection card" hidden>
       <img id="selectionPoster" class="poster" alt="">
       <div class="selection-copy">
         <div id="selectionTitle"></div>
@@ -57,30 +60,38 @@
       <button type="button" id="clearSelection" class="text-button">Change</button>
     </div>
 
-    <section id="watch" class="watch" hidden>
-      <div class="watch-bar">
-        <span>Where to watch</span>
-        <label class="region-label">
-          <span class="visually-hidden">Country</span>
-          <select id="region"></select>
-        </label>
+    <div id="open" class="open" hidden>
+      <div class="section-label">Open on</div>
+      <div class="icons">
+        <button type="button" class="icon-wrapper" data-source="letterboxd" aria-pressed="false" title="Letterboxd" aria-label="Letterboxd">
+          <span class="icon-img" style="background-image: url('images/letterboxdLogo.png')"></span>
+        </button>
+        <button type="button" class="icon-wrapper" data-source="imdb" aria-pressed="false" title="IMDb" aria-label="IMDb">
+          <span class="icon-img" style="background-image: url('images/imdbLogo.png')"></span>
+        </button>
+        <button type="button" class="icon-wrapper" data-source="tmdb" aria-pressed="false" title="TMDB" aria-label="TMDB">
+          <span class="icon-img" style="background-image: url('images/tmdbLogo.png')"></span>
+        </button>
+        <button type="button" class="icon-wrapper" data-source="rottenTomatoes" aria-pressed="false" title="Rotten Tomatoes" aria-label="Rotten Tomatoes">
+          <span class="icon-img" style="background-image: url('images/rtLogo.png')"></span>
+        </button>
+        <button type="button" class="icon-wrapper" data-source="metacritic" aria-pressed="false" title="Metacritic" aria-label="Metacritic">
+          <span class="icon-img" style="background-image: url('images/metacriticLogo.png')"></span>
+        </button>
       </div>
-      <div id="providers" class="providers"></div>
-      <button type="button" id="watchLink" class="text-button" hidden>All options</button>
+    </div>
+
+    <section id="watch" class="watch" hidden>
+      <button type="button" id="watchLink" class="watch-link" disabled>Where to watch</button>
     </section>
 
     <p id="setupNote" class="setup-note" hidden>Add your TMDB API key in keys.js, then reload.</p>
     <p id="errorMessage"></p>
 
-    <p class="attribution">
-      <a href="https://www.themoviedb.org/" target="_blank" rel="noopener">
-        <img src="images/tmdbLogo.png" alt="TMDB">
-      </a>
-      This product uses the TMDB API but is not endorsed or certified by TMDB.
-      Streaming data from <a href="https://www.justwatch.com/" target="_blank" rel="noopener">JustWatch</a>.
-    </p>
+    <footer class="fineprint">
+      <p class="credit">Luke McMeans · 2024</p>
+    </footer>
   </div>
-  <footer>Created by Luke McMeans (2024)</footer>
   <script type="module" src="popup.js"></script>
 </body>
 
